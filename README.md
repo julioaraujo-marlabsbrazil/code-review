@@ -1,6 +1,6 @@
 # marlabs-code-review
 
-Pacote npm **marlabs-code-review**: instala os 2 agents e as 9 skills de Code Review na pasta `.github/` do projeto.
+Pacote npm **marlabs-code-review**: instala os 3 agents (Code Review Front-end, Code Review Back-end e Validação de Requisitos) e as 11 skills na pasta `.github/` do projeto.
 
 Por enquanto, a instalação é feita somente via npm/npx.
 
@@ -15,9 +15,9 @@ Por enquanto, a instalação é feita somente via npm/npx.
 └── plugins/marlabs-code-review/
     ├── plugin.json                          # manifesto do pacote (versão de distribuição)
     ├── README.md
-    ├── com.github.copilot/agents/           # 2 agents (Copilot)
-    ├── skills/                              # 9 skills (portáveis)
-    └── code-review/                         # CHANGELOG e modelo de decisões
+    ├── com.github.copilot/agents/           # 3 agents (Copilot)
+    ├── skills/                              # 11 skills (portáveis)
+    └── code-review/                         # CHANGELOG, modelo de decisões e modelo de critérios de aceite do Jira
 ```
 
 ## Instalação
@@ -33,7 +33,7 @@ npx marlabs-code-review
 Versão específica:
 
 ```bash
-npx marlabs-code-review@1.0.1
+npx marlabs-code-review@2.5.0
 ```
 
 Opções:

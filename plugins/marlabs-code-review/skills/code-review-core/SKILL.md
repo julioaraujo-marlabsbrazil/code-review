@@ -5,7 +5,7 @@ description: Orquestra a revisão de código baseada no Change Set (CURRENT_BRAN
 
 # **Code Review Core**
 
-**Versão do pacote: 2.3.2**
+**Versão do pacote: 2.5.0**
 
 A versão identifica o conjunto completo de agentes e skills de Code Review. Ela deve ser registrada no cabeçalho de todo relatório gerado e na resposta textual. O histórico de versões está em `.github/code-review/CHANGELOG.md`.
 
@@ -61,6 +61,16 @@ Este arquivo é a única fonte de verdade para:
 Os agentes de Front-end e Back-end e as demais skills não devem redefinir essas regras. Eles apenas acrescentam o conhecimento específico de domínio.
 
 Em caso de divergência entre este arquivo e qualquer outro, prevalece este arquivo.
+
+## **Agente de Validação de Requisitos**
+
+O pacote inclui também o agente `.github/agents/requirements-validation.md`, que verifica se as alterações da branch atendem aos requisitos do card do Jira enviado pelo desenvolvedor, com as skills `requirements-extraction` e `requirements-traceability`.
+
+Esse agente usa as regras compartilhadas deste arquivo (versão e idioma, BASE_BRANCH, comandos permitidos, situações especiais do Git, alteração e origem das regras, preparação, Change Set, exclusões, padrões e stack, escopo, regra de localização, relatório HTML e READ-ONLY), exatamente como estão definidas aqui.
+
+O pipeline, os vereditos, o resultado final, a estrutura do relatório e a resposta textual desse agente são definidos no próprio agente e nas suas skills. Para ele, e somente para ele, eles substituem as seções de pipeline, skills registradas, validação de findings, severidade, contagem, resultado final, estrutura do relatório e resposta textual deste arquivo.
+
+Para os agentes de Code Review Front-end e Back-end, todas as regras deste arquivo continuam valendo integralmente, sem nenhuma alteração. Eles não executam as skills de requisitos.
 
 ---
 

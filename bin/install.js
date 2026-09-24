@@ -3,9 +3,9 @@
  * Instala os agents e skills de Code Review (marlabs-code-review) na pasta .github/ do projeto.
  *
  * Copia o pacote para os mesmos caminhos usados pelo POC:
- *   .github/agents/        (2 agents)
+ *   .github/agents/        (agents)
  *   .github/skills/        (skills)
- *   .github/code-review/   (CHANGELOG.md e review-decisions.md)
+ *   .github/code-review/   (CHANGELOG.md, review-decisions.md e modelo de criterios de aceite)
  *
  * Cuidados:
  *   - Confere o SHA256SUMS do pacote antes de copiar e os arquivos instalados depois de copiar.

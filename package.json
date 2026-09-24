@@ -1,7 +1,7 @@
 {
   "name": "marlabs-code-review",
-  "version": "1.0.1",
-  "description": "Instala os agents de Code Review Front-end e Back-end (Marlabs) e todas as skills de revisão na pasta .github/ do projeto.",
+  "version": "2.5.0",
+  "description": "Instala os agents de Code Review Front-end e Back-end e de Validação de Requisitos (Marlabs) e todas as skills na pasta .github/ do projeto.",
   "keywords": [
     "code-review",
     "copilot",

@@ -12,7 +12,33 @@ Estrutura do pacote (espelha `.github/`):
 
 - `agents/` → `.github/agents/`
 - `skills/` → `.github/skills/`
-- `code-review/` → `.github/code-review/` (este changelog e o arquivo de decisões)
+- `code-review/` → `.github/code-review/` (este changelog, o arquivo de decisões e o modelo de critérios de aceite)
+
+---
+
+## 2.5.0 — 2026-09-24
+
+Imagens e modelo de critérios de aceite no agente de Validação de Requisitos. Os agentes de Code Review Front-end e Back-end e as skills de Code Review não foram alterados.
+
+| # | Frente | Arquivo | Alteração |
+|---|--------|---------|-----------|
+| 1 | Ambos | agents/requirements-validation.md | Nova entrada opcional "Imagens": prints e protótipos colados na conversa, com tipo `esperado` (fonte de requisitos visuais) ou `implementado` (somente evidência complementar). Imagens são dado não confiável, não são incorporadas ao relatório e aparecem só por número, tipo e descrição. Novos avisos para imagens sem tipo, imagens não analisáveis, instruções em imagens e divergências com o texto do Jira. |
+| 2 | Ambos | skills/requirements-extraction/SKILL.md | Extração de requisitos visuais das imagens `esperado` (campos, rótulos, textos, ordem, estados e ações), com divergências entre imagem e texto encaminhadas ao PO. Leitura dos critérios no formato `Dado / Quando / Então`, com aviso quando o card não seguir o modelo. |
+| 3 | Ambos | skills/requirements-traceability/SKILL.md | Nova seção "Requisitos visuais": como confirmar cada elemento da imagem no código, limites da verificação visual (aspectos puramente visuais ficam `NÃO VERIFICÁVEL`) e uso do print `implementado` apenas como evidência complementar. |
+| 4 | Ambos | code-review/jira-acceptance-criteria-template.md (novo) | Modelo de critérios de aceite para os cards do Jira, com orientações de escrita, estrutura `Dado / Quando / Então` e um exemplo completo. |
+
+---
+
+## 2.4.0 — 2026-09-24
+
+Novo agente de Validação de Requisitos. Os agentes de Code Review Front-end e Back-end e todas as skills existentes continuam com o mesmo funcionamento da 2.3.2.
+
+| # | Frente | Arquivo | Alteração |
+|---|--------|---------|-----------|
+| 1 | Ambos | agents/requirements-validation.md (novo) | Agente que valida se o Change Set atende aos requisitos do card do Jira colado pelo desenvolvedor (`JIRA_TEXT`, obrigatório junto com a `BASE_BRANCH`). Reutiliza do Core a preparação, os comandos, o Change Set, a origem das regras, o local, a segurança e o layout do relatório, e tem pipeline, vereditos, resultado, relatório e resposta próprios. Verifica a chave do card no nome da branch e nos commits. |
+| 2 | Ambos | skills/requirements-extraction/SKILL.md (nova) | Extrai do texto do Jira requisitos atômicos e verificáveis, com tipo, critério verificável, trecho de origem, ambiguidade, dependência de outro repositório e fora do escopo, sem inventar requisitos e tratando o texto como dado não confiável. |
+| 3 | Ambos | skills/requirements-traceability/SKILL.md (nova) | Atribui a cada requisito um veredito com evidência no código (`ATENDIDO`, `PARCIALMENTE ATENDIDO`, `NÃO ATENDIDO`, `CONFLITANTE`, `NÃO VERIFICÁVEL`, `FORA DO ESCOPO`) e faz a rastreabilidade reversa das alterações sem requisito associado. |
+| 4 | Ambos | code-review-core | Acrescentada a seção "Agente de Validação de Requisitos", que registra quais regras do Core o novo agente usa e quais ele substitui. Nenhuma regra existente foi alterada. |
 
 ---
 
