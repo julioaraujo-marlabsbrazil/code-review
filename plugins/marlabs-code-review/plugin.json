@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "marlabs-code-review",
+  "version": "1.0.0",
+  "description": "Agents de Code Review Front-end e Back-end (Marlabs) com o Core e todas as skills de revisão baseadas no Change Set (CURRENT_BRANCH x BASE_BRANCH).",
+  "author": {
+    "name": "Julio Chiuchi"
+  },
+  "license": "UNLICENSED",
+  "keywords": ["code-review", "agents", "skills", "front-end", "back-end", "security", "architecture"]
+}
