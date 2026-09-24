@@ -3,6 +3,5 @@
 plugins/** -text
 SHA256SUMS -text
 
-# Scripts de instalacao
-*.sh text eol=lf
-*.ps1 text eol=crlf
+# Instalador npm (shebang exige LF em Linux/macOS)
+bin/*.js text eol=lf

@@ -22,4 +22,4 @@ Plugin no formato **Agent Plugins 1.0** que instala, em uma única operação, o
 
 O conteúdo de todos os arquivos é idêntico byte a byte ao POC (ver `SHA256SUMS` na raiz do repositório). A única diferença é o nome dos arquivos de agent, que recebem a extensão `.agent.md` exigida pela especificação para `com.github.copilot/agents/`.
 
-A versão `1.0.0` é a versão de distribuição do plugin. A versão das regras continua sendo a declarada em `skills/code-review-core/SKILL.md`.
+A versão `1.0.1` é a versão de distribuição do plugin. A versão das regras continua sendo a declarada em `skills/code-review-core/SKILL.md`.

@@ -1,129 +1,101 @@
-# marlabs-code-review-marketplace
+# marlabs-code-review
 
-Marketplace (Agent Plugins 1.0) do plugin **marlabs-code-review**: 2 agents + 9 skills de Code Review.
+Pacote npm **marlabs-code-review**: instala os 2 agents e as 9 skills de Code Review na pasta `.github/` do projeto.
+
+Por enquanto, a instalação é feita somente via npm/npx.
 
 ## Estrutura
 
 ```text
 .
-├── .github/plugin/marketplace.json          # catálogo do marketplace
 ├── .gitattributes                           # preserva os bytes do pacote (sem conversão de fim de linha)
-├── install.ps1                              # instalação no projeto (Windows PowerShell)
-├── install.sh                               # instalação no projeto (bash: Linux, macOS, Git Bash)
+├── package.json                             # pacote npm "marlabs-code-review"
+├── bin/install.js                           # instalador npm (Node.js 14 ou superior, sem dependências)
 ├── SHA256SUMS                               # hashes dos arquivos originais do POC
 └── plugins/marlabs-code-review/
-    ├── plugin.json                          # manifesto Agent Plugins 1.0
+    ├── plugin.json                          # manifesto do pacote (versão de distribuição)
     ├── README.md
     ├── com.github.copilot/agents/           # 2 agents (Copilot)
     ├── skills/                              # 9 skills (portáveis)
     └── code-review/                         # CHANGELOG e modelo de decisões
 ```
 
-## Antes de publicar
+## Instalação
 
-Substitua `code-review` pelo repositório onde este conteúdo for publicado, neste README e no valor padrão de `Repo`/`REPO` em `install.ps1` e `install.sh`, e crie a tag `v1.0.0`.
+Não exige conta git nem acesso a nenhum repositório: o pacote é baixado do registro público do npm. Requer Node.js 14 ou superior e git.
 
-## Instalação no projeto (recomendada)
-
-Os scripts copiam o pacote para a pasta `.github/` do projeto, nos mesmos caminhos usados pelo POC (`.github/agents`, `.github/skills`, `.github/code-review`). Assim os agents encontram o Core e as skills, e as regras ficam versionadas no Git do projeto, mantendo a leitura das regras pela `BASE_BRANCH`.
-
-Execute na raiz do projeto (qualquer pasta dentro de um repositório git).
-
-Windows (PowerShell):
-
-```powershell
-irm https://raw.githubusercontent.com/code-review/v1.0.0/install.ps1 | iex
-```
-
-Linux, macOS ou Git Bash:
+Execute na raiz do projeto (qualquer pasta dentro de um repositório git):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/code-review/v1.0.0/install.sh | bash
+npx marlabs-code-review
 ```
 
-Repositório privado (usa as credenciais git da máquina): clone o marketplace e execute o script do clone.
+Versão específica:
 
 ```bash
-git clone --branch v1.0.0 https://github.com/code-review.git marlabs-code-review-marketplace
-```
-
-```powershell
-.\marlabs-code-review-marketplace\install.ps1 -Target C:\caminho\do\projeto
-```
-
-```bash
-bash marlabs-code-review-marketplace/install.sh --target /caminho/do/projeto
+npx marlabs-code-review@1.0.1
 ```
 
 Opções:
 
-| PowerShell | bash | Efeito |
-|---|---|---|
-| `-Target <pasta>` | `--target <pasta>` | Projeto de destino (padrão: pasta atual) |
-| `-Repo code-review` | `--repo code-review` | Baixa o pacote desse repositório (também aceita URL git) |
-| `-Ref v1.0.0` | `--ref v1.0.0` | Tag ou branch a instalar |
-| `-Source <pasta>` | `--source <pasta>` | Usa um pacote local (pasta raiz deste repositório) |
-| `-Yes` | `--yes` | Confirma a substituição de arquivos existentes sem perguntar |
-| `-DryRun` | `--dry-run` | Mostra o plano sem alterar nada |
+| Opção | Efeito |
+|---|---|
+| `--target <pasta>` | Projeto de destino (padrão: pasta atual) |
+| `--yes`, `-y` | Confirma a substituição de arquivos existentes sem perguntar |
+| `--dry-run` | Mostra o plano sem alterar nada |
+| `--version`, `-v` | Mostra a versão do pacote |
+| `--help`, `-h` | Mostra a ajuda |
 
-Com parâmetros no PowerShell remoto:
+Com npm 7 ou superior, as opções vão depois do nome do pacote: `npx marlabs-code-review --dry-run`. Para pular a pergunta do npm sobre instalar o pacote temporário, use `npx --yes marlabs-code-review`.
 
-```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/code-review/v1.0.0/install.ps1))) -Ref v1.0.0 -DryRun
-```
-
-O que os scripts garantem:
-
-- conferem o `SHA256SUMS` do pacote antes de copiar e os arquivos instalados depois de copiar;
-- nunca sobrescrevem `.github/code-review/review-decisions.md` (decisões do time);
-- mostram a versão instalada e a nova, e pedem confirmação antes de substituir arquivos existentes (sem terminal interativo, exigem `-Yes`/`--yes`);
-- não alteram nada fora de `.github/agents`, `.github/skills` e `.github/code-review`, e não removem arquivos que não pertencem ao pacote;
-- não fazem commit: ao final mostram os comandos para revisar e comitar.
-
-Atualização para uma nova versão: execute o script com a nova tag, revise o diff e comite em um PR. Nesse PR, as regras aplicadas na revisão ainda são as da `BASE_BRANCH`; a nova versão passa a valer após o merge.
-
-No Windows PowerShell 5.1, caminhos com mais de 260 caracteres não são suportados: use uma pasta com caminho mais curto.
-
-## Instalação como plugin
-
-Atenção: os agents leem o Core em `.github/skills/code-review-core/SKILL.md` do projeto. Instalado somente como plugin, o pacote fica fora do projeto e o agent interrompe a revisão por não encontrar as regras. Para executar revisões, use a instalação no projeto acima.
-
-### Copilot CLI
+Se o projeto tiver um `.npmrc` apontando para um registro privado do cliente que não repassa pacotes públicos, indique o registro público:
 
 ```bash
-copilot plugin marketplace add code-review
-copilot plugin install marlabs-code-review@marlabs-code-review-marketplace
+npx --registry https://registry.npmjs.org marlabs-code-review
 ```
 
-Instalação direta, sem marketplace:
+O que o instalador garante:
+
+- confere o `SHA256SUMS` do pacote antes de copiar e os arquivos instalados depois de copiar;
+- nunca sobrescreve `.github/code-review/review-decisions.md` (decisões do time);
+- mostra a versão instalada e a nova, e pede confirmação antes de substituir arquivos existentes (sem terminal interativo, exige `--yes`);
+- não altera nada fora de `.github/agents`, `.github/skills` e `.github/code-review`, e não remove arquivos que não pertencem ao pacote;
+- não faz commit: ao final mostra os comandos para revisar e comitar.
+
+Atualização para uma nova versão: execute `npx marlabs-code-review@<versão>`, revise o diff e comite em um PR. Nesse PR, as regras aplicadas na revisão ainda são as da `BASE_BRANCH`; a nova versão passa a valer após o merge.
+
+Logo após uma publicação, o download pode responder `404 Not Found` por alguns minutos enquanto o CDN do npm atualiza. Aguarde e execute de novo.
+
+## Publicar no npm
+
+A conta do npm usa 2FA por chave de segurança/passkey (sem código OTP de 6 dígitos). A confirmação é feita pelo navegador, o que exige **npm 9 ou superior (Node.js 18 ou superior)**. Com versões antigas, como o npm 6 do Node.js 14, o `npm publish` pede um OTP que não existe e a publicação falha.
+
+O instalador continua compatível com Node.js 14; somente a publicação exige a versão mais nova. Com o nvm:
 
 ```bash
-copilot plugin install code-review:plugins/marlabs-code-review
+nvm install 22
+nvm use 22
+npm -v
 ```
 
-Verificação (em uma sessão interativa do `copilot`): `/agent` lista os 2 agents e `/skills list` lista as 9 skills.
-
-Atualização após nova versão: `copilot plugin update marlabs-code-review`.
-
-### VS Code
-
-Em `settings.json`:
-
-```json
-"chat.plugins.marketplaces": ["code-review"]
-```
-
-Depois, instale `marlabs-code-review` pela view de extensões (`@agentPlugins`) ou pelo comando **Chat: Install Plugin From Source**.
-
-## Teste local antes de publicar
+Na raiz deste repositório:
 
 ```bash
-copilot plugin install ./plugins/marlabs-code-review
-copilot plugin list
+npm login --auth-type=web
+npm whoami
+npm pack --dry-run
+npm publish
 ```
+
+O `npm login --auth-type=web` abre o navegador para confirmar com a passkey. Se o `npm publish` pedir confirmação, abra o link `https://www.npmjs.com/auth/cli/...` exibido, confirme com a passkey e pressione ENTER no terminal.
+
+Depois, volte para a versão de Node.js do seu projeto (por exemplo, `nvm use 14`).
+
+Tokens com "Bypass 2FA" não são recomendados: eles perdem a publicação direta a partir de janeiro de 2027 (ver [changelog do GitHub](https://github.blog/changelog/2026-07-31-restricting-npm-bypass-2fa-granular-access-tokens/)). Para automatizar a publicação, use trusted publishing (OIDC) ou staged publishing.
 
 ## Publicar uma nova versão
 
-1. Atualize os arquivos do plugin.
-2. Incremente `version` em `plugins/marlabs-code-review/plugin.json` e em `.github/plugin/marketplace.json`.
-3. Crie a tag: `git tag v1.0.1 && git push --tags`.
+1. Os arquivos de agents e skills não são alterados neste repositório: eles devem permanecer idênticos ao POC, conferidos pelo `SHA256SUMS`. Se o POC mudar, copie os novos arquivos e regenere o `SHA256SUMS`.
+2. Incremente `version` em `package.json` e em `plugins/marlabs-code-review/plugin.json`.
+3. Publique no npm (seção acima). Uma versão publicada no npm não pode ser sobrescrita.
+4. Crie a tag: `git tag v<versão> && git push --tags`.

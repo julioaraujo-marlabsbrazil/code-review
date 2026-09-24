@@ -1,0 +1,29 @@
+{
+  "name": "marlabs-code-review",
+  "version": "1.0.1",
+  "description": "Instala os agents de Code Review Front-end e Back-end (Marlabs) e todas as skills de revisão na pasta .github/ do projeto.",
+  "keywords": [
+    "code-review",
+    "copilot",
+    "agents",
+    "skills",
+    "github-copilot"
+  ],
+  "author": "Julio Chiuchi",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julioaraujo-marlabsbrazil/code-review.git"
+  },
+  "bin": {
+    "marlabs-code-review": "bin/install.js"
+  },
+  "files": [
+    "bin/install.js",
+    "plugins/marlabs-code-review/",
+    "SHA256SUMS"
+  ],
+  "engines": {
+    "node": ">=14"
+  }
+}
