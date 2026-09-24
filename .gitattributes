@@ -1,0 +1,8 @@
+# Arquivos do pacote: preservar os bytes exatamente como no POC (CRLF), sem conversao de fim de linha.
+# Sem isso, clones em Linux/macOS ou com core.autocrlf alterariam os arquivos e o SHA256SUMS falharia.
+plugins/** -text
+SHA256SUMS -text
+
+# Scripts de instalacao
+*.sh text eol=lf
+*.ps1 text eol=crlf
